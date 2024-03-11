@@ -23,12 +23,14 @@
 }
 .download:hover{
     background-color: #fd0 !important;
-    color: black;
-    border: 2px solid #fd0;
+    color: black !important;
+    border: 2px solid black;
 }
 
 .download{
-    border: 2px solid black;
+    border: 2px solid #fd0;
+    background-color: black !important;
+    color: #fd0 !important;
 
 }
 .signIn{
@@ -71,6 +73,27 @@
    
    }
    .email{
-    font-size: .9rem !important;
+    font-size: .8rem !important;
    }
+   .persnal-info{
+    width: 15vw;
+   }
+}
+
+.resume-container{
+   
+    padding-top: 110px;
+    position: fixed;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+
+.circle{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+
+    cursor: pointer;
 }

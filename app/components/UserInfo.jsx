@@ -74,11 +74,11 @@ export default function UserInfo() {
     
         <Container maxW='70vw'paddingTop='140px'style={{height:'100%',overflowY:'auto'}}>
 
-          <Flex justify='space-between'>
+          {/* <Flex justify='space-between'>
           <Heading size='md'>Fill the form Manually or use Templates</Heading>
           <Button size='lg'bg='black'color='yellow'className='download'onClick={moveToTemplates}>Templates</Button>
 
-          </Flex>
+          </Flex> */}
 
           <Center height='10px'>
   <Divider orientation='vertical' />

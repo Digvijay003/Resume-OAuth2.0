@@ -6,11 +6,12 @@ import SignIn from '../components/SignIn'
 import { Flex } from '@chakra-ui/layout'
 import { Spinner } from '@chakra-ui/spinner'
 import { Button, Grid, GridItem } from '@chakra-ui/react'
-import {Editor, EditorState,ContentState} from 'draft-js';
+import {Editor, EditorState,ContentState,convertFromRaw, convertFromHTML} from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import Template1 from '../components/Template1'
 import htmlToDraft from "html-to-draftjs";
 import ReactDOMServer from 'react-dom/server';
+
 
 
 export default function page() {
@@ -19,17 +20,15 @@ export default function page() {
     const [editorState, setEditorState] = React.useState(EditorState.createEmpty());
 
     const handleTemplates = () => {
-        // Render the React component to HTML
-        const template1HTML = ReactDOMServer.renderToString(<Template1 />);
-        
-        // Convert the HTML to Draft.js content
-        const blocksFromHTML = htmlToDraft(template1HTML);
-        const { contentBlocks, entityMap } = blocksFromHTML;
-        
-        // Set the Draft.js editor state
-        setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocks, entityMap)));
-    };
-
+        const template1JSX = <Template1 />;
+        const template1HTML = ReactDOMServer.renderToString(template1JSX);
+        const blocksFromHTML = convertFromHTML(template1HTML);
+        const contentState = ContentState.createFromBlockArray(
+          blocksFromHTML.contentBlocks,
+          blocksFromHTML.entityMap
+        );
+        setEditorState(EditorState.createWithContent(contentState));
+      };
 
 
     if(status==='authenticated'){
@@ -38,13 +37,13 @@ export default function page() {
                 <Navbar/>
                 <Grid templateColumns='300px 1fr'style={{width:'100vw',paddingTop:'150px'}}>
                     <GridItem>
-                        <Button size='md'className='signOut'marginRight='8px'marginLeft='4px'onClick={handleTemplates}>Template 1</Button>
-                        <Button size='md'className='signOut'>Template 2</Button>
+                        <Button size='md'className='download'marginRight='8px'marginLeft='4px'onClick={handleTemplates}>Template 1</Button>
+                        <Button size='md'className='download'>Template 2</Button>
 
                     </GridItem>
-                    <GridItem style={{border:'2px solid red'}}>
+                    <GridItem style={{border:'2px solid black'}}>
 
-                    <Editor editorState={editorState} onChange={setEditorState}/>;
+                    <Editor editorState={editorState} onChange={setEditorState} />;
 
                     </GridItem>
 

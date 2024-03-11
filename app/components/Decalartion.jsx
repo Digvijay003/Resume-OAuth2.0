@@ -1,10 +1,13 @@
 import { addDecalartionData } from '@/reducers/AllDataSlice'
-import { Button, Center, Checkbox, Divider, Heading, Input, useToast } from '@chakra-ui/react'
+import { Button, Center, Checkbox, Divider, Flex, Heading, Input, useToast } from '@chakra-ui/react'
 import { useFormik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { BsCheckCircleFill } from "react-icons/bs";
 
 export default function Decalartion() {
+  let timeout=null
+  const [showIcon,setShowIcon]=useState(false)
   const dispatch=useDispatch()
   const toast=useToast()
   const formik=useFormik({
@@ -14,6 +17,13 @@ export default function Decalartion() {
       certificate2:''
     },
     onSubmit:(values)=>{
+      clearTimeout(timeout)
+      setShowIcon(true)
+
+      timeout=setTimeout(()=>{
+        setShowIcon(false)
+
+      },2000)
       dispatch(addDecalartionData({payload:values}))
       toast({
         isClosable:true,
@@ -36,8 +46,12 @@ export default function Decalartion() {
         <Center height='10px'>
   <Divider orientation='vertical' />
 </Center>
-       
-        <Button type='submit'colorScheme='green'>Save</Button>
+       <Flex gap={4} align='center'>
+       <Button type='submit'colorScheme='green'isDisabled={showIcon}>Save</Button>
+        {showIcon?<BsCheckCircleFill color='green'size='30'/>:null}
+
+       </Flex>
+    
         <Center height='10px'>
   <Divider orientation='vertical' />
 </Center>

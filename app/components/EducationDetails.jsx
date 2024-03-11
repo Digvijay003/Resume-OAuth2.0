@@ -1,9 +1,10 @@
 import { Button, Center, Divider, Flex, Heading, Input, Select, Spacer, Textarea, useToast } from '@chakra-ui/react'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from 'react-redux';
 import { addEducationalData, removeEducationalData } from '@/reducers/AllDataSlice';
 import { MdAddCircleOutline, MdDelete } from "react-icons/md";
+import { BsCheckCircleFill } from "react-icons/bs";
 
 import { addEducationalComponent, removeEducationalComponent } from '@/reducers/AllComponentsSlice';
 
@@ -11,6 +12,10 @@ export default function EducationDetails({index}) {
   const dispatch=useDispatch()
   const ref=useRef()
   const toast=useToast()
+
+  const [showIcon,setShowIcon]=useState(false)
+
+  let timeout=null
  
 
   const handleClear=(index)=>{
@@ -32,6 +37,13 @@ export default function EducationDetails({index}) {
       to:''
     },
     onSubmit:(values)=>{
+      clearTimeout(timeout)
+      setShowIcon(true)
+
+      timeout=setTimeout(()=>{
+        setShowIcon(false)
+
+      },2000)
      dispatch(addEducationalData({payload:values,index:index}))
      toast({
       isClosable:true,
@@ -92,7 +104,12 @@ export default function EducationDetails({index}) {
 <Center height='10px'>
   <Divider orientation='vertical' />
 </Center>
-<Button type='submit'colorScheme='green'>Save</Button>
+<Flex gap={4}align='center'>
+<Button type='submit'colorScheme='green'isDisabled={showIcon}>Save</Button>
+{showIcon?<BsCheckCircleFill color='green'size='30'/>:null}
+
+</Flex>
+
 </form>
 
 

@@ -1,6 +1,6 @@
 "use client"
 import { Flex, Spinner } from '@chakra-ui/react'
-import { useSession } from 'next-auth/react'
+import { SessionProvider, useSession } from 'next-auth/react'
 import React from 'react'
 import Navbar from '../components/Navbar'
 import DownloadResume from '../components/DownloadResume'
@@ -15,6 +15,7 @@ export default function Resume() {
       <div>
         <Reduxprovider>
         <Navbar/>
+       
        <DownloadResume/>
 
         </Reduxprovider>

@@ -2,11 +2,16 @@ import { addWorkExperienceComponent, removeWorkExperienceComponent } from '@/red
 import { addWorkExperienceData, removeWorkExperienceData } from '@/reducers/AllDataSlice'
 import { Button, Center, Divider, Flex, Heading, Input, Textarea, useToast } from '@chakra-ui/react'
 import { useFormik } from 'formik'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { MdAddCircleOutline, MdDelete } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
+import { BsCheckCircleFill } from "react-icons/bs";
 
 export default function WorkExperience({index}) {
+
+  let timeout=null
+
+  const [showIcon,setShowIcon]=useState(false)
 
   const dispatch=useDispatch()
 
@@ -32,6 +37,13 @@ export default function WorkExperience({index}) {
       to:''
     },
     onSubmit:(values)=>{
+      clearTimeout(timeout)
+      setShowIcon(true)
+
+      timeout=setTimeout(()=>{
+        setShowIcon(false)
+
+      },2000)
      dispatch(addWorkExperienceData({payload:values,index:index}))
      toast({
       isClosable:true,
@@ -85,7 +97,12 @@ export default function WorkExperience({index}) {
 <Center height='50px'>
   <Divider orientation='vertical' />
 </Center>
-<Button type='submit'colorScheme='green'>Save</Button>
+<Flex gap={4} align='center'>
+<Button type='submit'colorScheme='green'isDisabled={showIcon}>Save</Button>
+{showIcon?<BsCheckCircleFill color='green'size='30'/>:null}
+
+</Flex>
+
 </form>
 
 
