@@ -23,7 +23,7 @@ export default function Navbar() {
 
 
     const chatGPT=()=>{
-      router.push('/chatbot')
+      router.push('/createMessage')
 
     }
   

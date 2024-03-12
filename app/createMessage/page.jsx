@@ -3,10 +3,14 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import TypingAnimation from '../components/AnimationLoading'
+import { Flex, Spinner } from '@chakra-ui/react'
+import SignIn from '../components/SignIn'
+import { useSession } from 'next-auth/react'
 
 
 export default function page() {
     const [input,setInput]=useState('')
+    const {status}=useSession()
    
     const [chatLogs,setChatLogs]=useState([])
 
@@ -70,6 +74,29 @@ export default function page() {
        
 
     }
+
+    
+    if(status==='unauthenticated'){
+      return <>
+      <SignIn/>
+      </>
+    } 
+     if (status==='loading'){
+      return <Flex width='100vw'height='100vh'alignItems='center'justify='center'>
+      
+   
+      <Spinner
+    thickness='10px'
+    speed='0.85s'
+    emptyColor='black'
+    color='#fd0'
+   
+    width='130px'
+    height='130px'
+  />
+  
+        </Flex>
+      }
 
    
   return (
