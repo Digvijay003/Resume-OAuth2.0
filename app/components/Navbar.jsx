@@ -8,6 +8,7 @@ import { FaSun,FaMoon,FaHome } from "react-icons/fa";
 import '../globals.css'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 
 
@@ -18,6 +19,13 @@ export default function Navbar() {
     console.log(session,'linkedin session')
   
     const{colorMode,toggleColorMode}=useColorMode()
+    const router=useRouter()
+
+
+    const chatGPT=()=>{
+      router.push('/chatbot')
+
+    }
   
   return (
     <Flex width='100vw'justify='space-between'alignItems='center'p='4'color='black'bg='#fd0'style={{position:'fixed',height:'100px',zIndex:99999999}}>
@@ -42,6 +50,7 @@ export default function Navbar() {
   </Flex>
 
   <Flex justify='space-between'gap={2}>
+  <Button onClick={chatGPT}size='md'className='signOut'>Try ChatGPT</Button>
     
     <Link className='home'href='/'><FaHome/></Link>
     <Button onClick={()=>signOut()}size='md'className='signOut'>Sign Out</Button>

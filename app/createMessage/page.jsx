@@ -1,0 +1,117 @@
+"use client"
+import axios from 'axios'
+import React, { useState } from 'react'
+import Navbar from '../components/Navbar'
+import TypingAnimation from '../components/AnimationLoading'
+
+
+export default function page() {
+    const [input,setInput]=useState('')
+   
+    const [chatLogs,setChatLogs]=useState([])
+
+    const [isLoading, setIsLoading] = useState(false);
+
+  
+
+    const handleSubmit=async (e)=>{
+        e.preventDefault()
+       
+        setChatLogs(prevChats=>[...prevChats,{type:'user',message:input}])
+
+      await sendMessages(input)
+
+        setInput('')
+
+    }
+
+   
+   
+       
+
+    const sendMessages =  async (message)=>{
+        
+
+        const url = 'https://api.openai.com/v1/chat/completions';
+        const headers = {
+          'Content-type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`
+        };
+
+
+       
+
+        const data={
+    
+            model: 'gpt-3.5-turbo',
+          
+            messages:[{"role":"user","content":message}]
+    
+    
+        }
+
+        setIsLoading(true)
+
+        const res=await axios.post(url,data,{headers:headers})
+        .then(res=>{
+            console.log(res,'Let see Response')
+            
+           
+            setChatLogs((prevChatLog) => [...prevChatLog, { type: 'bot', message: res?.data?.choices[0]?.message?.content }])
+            setIsLoading(false)
+        })
+        .catch(err=>{
+          setIsLoading(false)
+            console.log(err,'error occurs')
+        })
+
+        return res
+        
+       
+
+    }
+
+   
+  return (
+    <div> 
+        <Navbar/>
+        <div className="container mx-auto max-w-[700px] bg-gray-900"style={{paddingTop:'100px',height:'100vh',overflow:'scroll'}}>
+      <div className="flex flex-col h-screen">
+        <h1 className="bg-gradient-to-r  text-transparent bg-clip-text text-center py-3 font-bold text-6xl"style={{color:'#fd0',paddingTop:'30px'}}>ChatGPT</h1>
+        <div className="flex-grow p-6">
+          <div className="flex flex-col space-y-4">
+          {
+        chatLogs.map((message, index) => (
+          <div key={index} className={`flex ${
+            message.type === 'user' ? 'justify-end' : 'justify-start'
+            }`}>
+            <div className={`${
+              message.type === 'user' ? 'bg-white text-black' : 'bg-yellow-300 text-black'
+            } rounded-lg p-4 max-w-sm`}>
+            {message.message}
+            </div>
+            </div>
+        ))
+            }
+            {
+              isLoading &&
+              <div key={chatLogs.length} className="flex justify-start">
+                  <div className="bg-gray-800 rounded-lg p-4 text-white max-w-sm">
+                   <TypingAnimation/>
+                  </div>
+              </div>
+            }
+      </div>
+        </div>
+        <form onSubmit={handleSubmit} className="flex-none p-6">
+          <div className="flex rounded-lg border border-gray-700 bg-gray-800">  
+        <input type="text" className="flex-grow px-4 py-2 bg-transparent text-white focus:outline-none" placeholder="Type your message..." value={input} onChange={(e) => setInput(e.target.value)} />
+            <button type="submit" className="rounded-lg px-4 py-2 text-black font-semibold focus:outline-none "style={{backgroundColor:'#fd0'}}>Send</button>
+            </div>
+        </form>
+        </div>
+    </div>
+       
+    </div>
+  )
+}
