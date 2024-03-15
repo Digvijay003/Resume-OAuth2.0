@@ -18,60 +18,48 @@ export default function page() {
 
   
 
-    const handleSubmit=async (e)=>{
+    const handleSubmit= (e)=>{
         e.preventDefault()
        
         setChatLogs(prevChats=>[...prevChats,{type:'user',message:input}])
 
-      await sendMessages(input)
+        sendMessages(input)
 
         setInput('')
 
     }
 
-   
-   
-       
-
-    const sendMessages =  async (message)=>{
+    const sendMessages =  (message)=>{
         
 
-        const url = 'https://api.openai.com/v1/chat/completions';
-        const headers = {
-          'Content-type': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`
-        };
-
-
-       
+        const url = 'http://localhost:3000/api/createMessage';
+        // const headers = {
+        //   'Content-type': 'application/json',
+        //   'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`
+        // };
 
         const data={
-    
             model: 'gpt-3.5-turbo',
-          
             messages:[{"role":"user","content":message}]
-    
-    
         }
+
+        const headers=  {
+          'Content-Type': 'application/json'
+        }
+
+        console.log(typeof data)
 
         setIsLoading(true)
 
-        const res=await axios.post(url,data,{headers:headers})
-        .then(res=>{
+        axios.post(url,data,{headers:headers}).then(res=>{
             console.log(res,'Let see Response')
-            
-           
-            setChatLogs((prevChatLog) => [...prevChatLog, { type: 'bot', message: res?.data?.choices[0]?.message?.content }])
+             setChatLogs((prevChatLog) => [...prevChatLog, { type: 'bot', message: res?.data?.data?.choices[0]?.message?.content }])
             setIsLoading(false)
         })
         .catch(err=>{
           setIsLoading(false)
-            console.log(err,'error occurs')
+            console.log(err.response.data,'error occurs')
         })
-
-        return res
-        
-       
 
     }
 

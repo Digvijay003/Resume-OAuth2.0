@@ -1,30 +1,34 @@
-// import axios from "axios";
-// import { NextResponse } from "next/server";
+import axios from "axios";
+import { NextResponse } from "next/server";
 
 
-// export async function POST(request,response){
-//     if(request.method!=='POST'){
-//         return NextResponse.json({message:'Method should be POST only'})
-//     }
-    
-//     console.log(await request.json(),'ye bhe dekho bahar')
+export async function POST(request,response){
+    if(request.method!=='POST'){
+        return NextResponse.json({message:'Method should be POST only'})
+    }
+
+
    
-//     try{
-//         const {messages}=await request.json()
-//         console.log(await request.json(),'ye bhe dekho andar')
-//         const url = 'https://api.openai.com/v1/chat/completions';
-//         const headers = {
-//           'Content-type': 'application/json',
-//           'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
-//         };
+    try{
+       
+        const data=await request.json()
 
-//         const res= await axios.post(url,messages,{headers})
+        console.log(data,'let see this also')
+       
+        const url = 'https://api.openai.com/v1/chat/completions';
+        const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`
+        };
 
-        
+        const res= await axios.post(url,data,{headers:headers})
 
-//         return NextResponse.json(res.data)
 
-//     }catch(err){
-//         return NextResponse.json({message:'Some error occurs'+err})
-//     }
-// }
+        console.log(res,'what is res here')
+
+        return NextResponse.json({"data":res.data})
+
+    }catch(err){
+        return NextResponse.json({message:'Some error occurs'+err})
+    }
+}
