@@ -25,9 +25,9 @@ export default function Resume() {
     )
 
   } else if(status==='unauthenticated'){
-    return <>
+    return <div className='signin-container'>
     <SignIn/>
-    </>
+    </div>
   } else if (status==='loading'){
     return <Flex width='100vw'height='100vh'alignItems='center'justify='center'>
     

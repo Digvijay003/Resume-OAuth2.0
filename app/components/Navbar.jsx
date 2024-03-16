@@ -49,7 +49,7 @@ export default function Navbar() {
     
   </Flex>
 
-  <Flex justify='space-between'gap={2}>
+  <Flex justify='space-between'gap={2}className='rightsidemenu'>
   <Button onClick={chatGPT}size='md'className='signOut'>Try ChatGPT</Button>
     
     <Link className='home'href='/'><FaHome/></Link>

@@ -72,7 +72,7 @@ export default function UserInfo() {
         return <div >
         <Navbar />
     
-        <Container maxW='70vw'paddingTop='140px'style={{height:'100%',overflowY:'auto'}}>
+        <Container maxW='70vw'className='container'>
 
           {/* <Flex justify='space-between'>
           <Heading size='md'>Fill the form Manually or use Templates</Heading>
@@ -148,9 +148,9 @@ export default function UserInfo() {
         </div>
     }else if(status==='unauthenticated'){
         return (
-            <>
+            <div className='signin-container'>
            <SignIn/>
-            </>
+            </div>
             
           )
 

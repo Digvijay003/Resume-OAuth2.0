@@ -65,9 +65,9 @@ export default function page() {
 
     
     if(status==='unauthenticated'){
-      return <>
+      return <div className='signin-container'>
       <SignIn/>
-      </>
+      </div>
     } 
      if (status==='loading'){
       return <Flex width='100vw'height='100vh'alignItems='center'justify='center'>
@@ -90,7 +90,7 @@ export default function page() {
   return (
     <div> 
         <Navbar/>
-        <div className="container mx-auto max-w-[700px] bg-gray-900"style={{paddingTop:'100px',height:'100vh',overflow:'scroll'}}>
+        <div className="container mx-auto max-w-[700px] chatgpt">
       <div className="flex flex-col h-screen">
         <h1 className="bg-gradient-to-r  text-transparent bg-clip-text text-center py-3 font-bold text-6xl"style={{color:'#fd0',paddingTop:'30px'}}>ChatGPT</h1>
         <div className="flex-grow p-6">
@@ -111,7 +111,7 @@ export default function page() {
             {
               isLoading &&
               <div key={chatLogs.length} className="flex justify-start">
-                  <div className="bg-gray-800 rounded-lg p-4 text-white max-w-sm">
+                  <div className="bg-white rounded-lg p-4 text-white max-w-sm">
                    <TypingAnimation/>
                   </div>
               </div>

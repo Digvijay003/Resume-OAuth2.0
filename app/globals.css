@@ -78,6 +78,25 @@
    .persnal-info{
     width: 15vw;
    }
+ 
+}
+
+@media (max-width:750px){
+    .rightsidemenu{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        height: 100px;
+        width: 45%;
+      
+        overflow: scroll;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      
+       }
+
 }
 
 .resume-container{
@@ -97,3 +116,91 @@
 
     cursor: pointer;
 }
+
+.container{
+    padding-top: 140px;
+    height: 100%;
+    overflow-y: auto;
+    border: 1.5px solid black;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+   
+
+
+}
+
+
+
+.chatgpt{
+    padding-top: 130px;
+    height: 100vh;
+    overflow: scroll;
+    background-color: rgb(31 41 55) !important;
+
+}
+.signin-container{
+
+background: #F7F9AE !important;
+background: linear-gradient(135deg, #F7F9AE, #E0C658) !important;
+height: 100vh !important;
+width: 100vw !important;
+
+}
+input:focus{
+    border-color: #fd0 !important;
+}
+
+body::-webkit-scrollbar {
+    width: .6em;
+  }
+
+
+/* Track */
+body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px black; 
+    border-radius: 5px;
+  }
+ 
+   
+  /* Handle */
+  body::-webkit-scrollbar-thumb {
+    background: #fd0 ; 
+    border-radius: 10px;
+  }
+ 
+  
+  /* Handle on hover */
+  body::-webkit-scrollbar-thumb:hover {
+    background: #fd0; 
+    cursor: pointer;
+  }
+ 
+
+
+  .chatgpt::-webkit-scrollbar {
+    width: .6em;
+  }
+
+
+/* Track */
+.chatgpt::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px black; 
+    border-radius: 5px;
+  }
+ 
+   
+  /* Handle */
+  .chatgpt::-webkit-scrollbar-thumb {
+    background: #fd0 ; 
+    border-radius: 10px;
+  }
+ 
+  
+  /* Handle on hover */
+  .chatgpt::-webkit-scrollbar-thumb:hover {
+    background: #fd0; 
+    cursor: pointer;
+  }
+ 
+
+
+
