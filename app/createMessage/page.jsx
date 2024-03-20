@@ -47,7 +47,7 @@ export default function page() {
           'Content-Type': 'application/json'
         }
 
-        console.log(typeof data)
+      
 
         setIsLoading(true)
 

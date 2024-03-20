@@ -1,6 +1,6 @@
 "use client"
 import { Box, Button, Flex, Heading, Spacer, Text, useColorMode } from '@chakra-ui/react'
-import { signOut, useSession } from 'next-auth/react'
+import {  signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import React from 'react'
 import { FaSun,FaMoon,FaHome } from "react-icons/fa";
@@ -25,6 +25,10 @@ export default function Navbar() {
     const chatGPT=()=>{
       router.push('/createMessage')
 
+    }
+    const handleSignOut=()=>{
+      signOut()
+      localStorage.removeItem("data")
     }
   
   return (
@@ -53,7 +57,7 @@ export default function Navbar() {
   <Button onClick={chatGPT}size='md'className='signOut'>Try ChatGPT</Button>
     
     <Link className='home'href='/'><FaHome/></Link>
-    <Button onClick={()=>signOut()}size='md'className='signOut'>Sign Out</Button>
+    <Button onClick={handleSignOut}size='md'className='signOut'>Sign Out</Button>
     <Button onClick={toggleColorMode}size='md'className='icons'>{colorMode==='dark'?<FaSun />:<FaMoon/>}</Button>
    
   </Flex>

@@ -31,13 +31,12 @@
     border: 2px solid #fd0;
     background-color: black !important;
     color: #fd0 !important;
+    margin-right: 15px !important;
 
 }
 .signIn{
    
-    width:'30%';
-   
-    height:'50%';
+ 
     background-color: white !important;
     border: 1px solid black !important;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px !important;
@@ -45,13 +44,16 @@
 .signIn-button{
     background-color: black !important;
     color: #fd0 !important;
-    border: 2px solid black;
+  
+    border: 2px solid #fd0;
+    width: 90% !important;
 }
 
 .signIn-button:hover{
-    background-color: white !important;
-    color: black !important;
+  
     border: 2px solid black;
+    background-color: #fd0 !important;
+    color: black !important;
 
 }
 .card-footer{
@@ -75,13 +77,21 @@
    .email{
     font-size: .8rem !important;
    }
-   .persnal-info{
-    width: 15vw;
+   
+   .signOut,.icons{
+    width: 50px;
+    height: 50px;
+    font-size: .6rem !important;
    }
+   .user-image{
+    width: 30px !important;
+    height: 30px !important;
+   }
+  
  
 }
 
-@media (max-width:750px){
+@media (max-width:700px){
     .rightsidemenu{
         display: flex;
         flex-direction: column;
@@ -90,14 +100,16 @@
         flex-wrap: wrap;
         height: 100px;
         width: 45%;
-      
-        overflow: scroll;
+    
         padding-top: 5px;
         padding-bottom: 5px;
       
        }
+    
 
 }
+
+
 
 .resume-container{
    
@@ -158,6 +170,7 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px black; 
     border-radius: 5px;
+    background-color: black;
   }
  
    
@@ -199,6 +212,12 @@ body::-webkit-scrollbar-track {
   .chatgpt::-webkit-scrollbar-thumb:hover {
     background: #fd0; 
     cursor: pointer;
+  }
+
+
+  .chatGpt-Icon{
+    cursor: pointer;
+    margin: 10px;
   }
  
 

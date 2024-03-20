@@ -41,9 +41,12 @@ export default function DownloadResume() {
    
     const educationFields=[]
     const workFields=[]
-    const allKeys=Object.keys(data)
   
-    allKeys.forEach(item=>{
+    if(data){
+    
+      const llKeys=Object?.keys(data)
+
+    allKeys?.forEach(item=>{
      
       if(item?.startsWith('e')){
       
@@ -54,6 +57,10 @@ export default function DownloadResume() {
         workFields.push(data[item])
       }
     })
+
+    }
+    
+  
 
     const download=  useReactToPrint({
       content:()=>elementToBePrinted.current
@@ -85,7 +92,7 @@ export default function DownloadResume() {
     // }
   return (<div className='resume-container'>
     <Flex justify='space-between'>
-      <Flex justify='center'align='center'gap={9}padding='10px'>
+      <Flex justify='center'align='center'gap={4}padding='10px'>
         <b>Choose Any One of the Color</b>
         <div style={{backgroundColor:'blue'}}className='circle'onClick={()=>setColor('#bae4e5')}></div>
         <div style={{backgroundColor:'green'}}className='circle'onClick={()=>setColor('hsla(78, 51%, 90%)')}></div>
@@ -109,10 +116,11 @@ export default function DownloadResume() {
           <Flex justify='space-between'>
           <Heading size='lg'>User personal Info</Heading>
           <Image
-          className="rounded-full"
+          className="rounded-full user-iamge"
         alt='user-image'
-          width={80}
-          height={80}
+        width={50}
+        height={50}
+         
           src={session?.user?.image}
           style={{border:'2px solid #fd0'}}
   
@@ -123,12 +131,12 @@ export default function DownloadResume() {
 
       
         <Flex justify='space-between'><b>Name</b>{data?.personaldata?.payload?.name}</Flex><br/>
-        <Flex justify='space-between'style={{width:'100%',overflow:'scroll'}}><b>Email</b>{data?.personaldata?.payload?.email}</Flex><br/>
+        <Flex justify='space-between'style={{width:'100%',overflow:'auto'}}><b>Email</b>{data?.personaldata?.payload?.email}</Flex><br/>
         <Flex justify='space-between'><b>Contact Number</b>{data?.personaldata?.payload?.phone}</Flex><br/>
        
           <Flex justify='space-between'><b>Job Profile</b>{data?.personaldata?.payload.profile}</Flex><br/>
         <Flex justify='space-between'><b>Primary Skill</b>{data?.personaldata?.payload.skill}</Flex><br/>
-        <Flex justify='space-between'style={{width:'100%',overflow:'scroll'}}gap={5}><b>Summary</b>{data?.personaldata?.payload.summary}</Flex><br/>
+        <Flex justify='space-between'style={{width:'100%',overflow:'auto'}}gap={5}><b>Summary</b>{data?.personaldata?.payload.summary}</Flex><br/>
         </GridItem>
 
         <GridItem style={{overflowY:'scroll',height:'80%',width:'60vw'}}>
@@ -166,8 +174,8 @@ export default function DownloadResume() {
         <div style={{paddingLeft:'10px',paddingRight:'20px'}}>
           <Heading size='lg'>Decalartion</Heading>
           <Flex justify='space-between'><b>Linkedin URL</b>{data?.decalartionData?.payload.linkedin}</Flex><br/>
-          <Flex justify='space-between'gap={4}style={{width:'100%',overflow:'scroll'}}><b>Certificate1</b>{data?.decalartionData?.payload.certificate1}</Flex><br/>
-          <Flex justify='space-between'style={{width:'100%',overflow:'scroll'}}gap={4}><b>Certificate2</b>{data?.decalartionData?.payload.certificate2}</Flex><br/>
+          <Flex justify='space-between'gap={4}style={{width:'100%',overflow:'auto'}}><b>Certificate1</b>{data?.decalartionData?.payload.certificate1}</Flex><br/>
+          <Flex justify='space-between'style={{width:'100%',overflow:'auto'}}gap={4}><b>Certificate2</b>{data?.decalartionData?.payload.certificate2}</Flex><br/>
          
           
         </div>

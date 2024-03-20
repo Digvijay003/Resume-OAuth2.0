@@ -6,6 +6,7 @@ import React, { useRef, useState } from 'react'
 import { MdAddCircleOutline, MdDelete } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { BsCheckCircleFill } from "react-icons/bs";
+import Image from 'next/image'
 
 export default function WorkExperience({index}) {
 
@@ -73,7 +74,13 @@ export default function WorkExperience({index}) {
           <label htmlFor='company'>Company Name</label>
         <Input placeholder='Enter Company Name'id='company'isRequired={true}onChange={formik.handleChange}value={formik.company}ref={ref}/>
         <label htmlFor='roles'>Summary</label>
+        
         <Textarea placeholder='Describe yours roles and responsibilities' isRequired={true}id='roles'onChange={formik.handleChange}value={formik.roles}/>
+        <Flex gap={4}justify='flex-start'align='center'>
+        <Image src='/chatGPT-Icon.png'width={50}height={50}alt='chatGPT'/>
+        <b>Click here to get help from ChatGPT</b>
+
+        </Flex>
         <label>From</label>
         <Input
  placeholder="From"

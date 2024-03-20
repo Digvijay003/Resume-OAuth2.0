@@ -7,6 +7,7 @@ import { MdAddCircleOutline, MdDelete } from "react-icons/md";
 import { BsCheckCircleFill } from "react-icons/bs";
 
 import { addEducationalComponent, removeEducationalComponent } from '@/reducers/AllComponentsSlice';
+import Image from 'next/image';
 
 export default function EducationDetails({index}) {
   const dispatch=useDispatch()
@@ -81,6 +82,11 @@ export default function EducationDetails({index}) {
 </Select>
         <label htmlFor='roles'>Summary</label>
         <Textarea placeholder='Describe yours roles and responsibilities' id='roles'onChange={formik.handleChange}value={formik.roles}isRequired={true}/>
+        <Flex gap={4}justify='flex-start'align='center'>
+        <Image src='/chatGPT-Icon.png'width={50}height={50}alt='chatGPT'/>
+        <b>Click here to get help from ChatGPT</b>
+
+        </Flex>
         <label>From</label>
         <Input
  placeholder="From"

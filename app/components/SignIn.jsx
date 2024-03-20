@@ -6,6 +6,8 @@ import Image from 'next/image'
 import React from 'react'
 import { FaLinkedin } from "react-icons/fa6";
 
+import { FcGoogle } from "react-icons/fc";
+
 export default function SignIn() {
 
 
@@ -21,7 +23,7 @@ export default function SignIn() {
   <CardFooter>
     <Flex className='card-footer'>
       <Flex>
-      <Image
+      {/* <Image
    width={35}
   height={30}
   style={{backgroundColor:'white',marginRight:'5px'}}
@@ -30,7 +32,8 @@ export default function SignIn() {
   
   src='/googleicon.png'
   
-/>
+/> */}
+<FcGoogle className='linkedin-icon'/>
 <Button onClick={()=>signIn('google')}size='lg'className='signIn-button'>
   
    
