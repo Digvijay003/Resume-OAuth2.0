@@ -7,10 +7,13 @@ import { MdAddCircleOutline, MdDelete } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { BsCheckCircleFill } from "react-icons/bs";
 import Image from 'next/image'
+import axios from 'axios'
 
 export default function WorkExperience({index}) {
 
   let timeout=null
+
+  const myRef=useRef()
 
   const [showIcon,setShowIcon]=useState(false)
 
@@ -55,6 +58,29 @@ export default function WorkExperience({index}) {
 
     }
   })
+
+  const getResponseFromChatGpt=()=>{
+    const url = 'http://localhost:3000/api/getResponse';
+  
+
+    const data={
+        model: 'gpt-3.5-turbo',
+        messages:[{"role":"user","content":myRef.current.value}]
+    }
+
+    const headers=  {
+      'Content-Type': 'application/json'
+    }
+
+    axios.post(url,data,{headers:headers})
+    .then(res=>{
+      console.log(res.data,'let see prompt response')
+      myRef.current.value=res?.data?.myresponse?.choices[0]?.message?.content
+
+    } )
+    .catch(err=>console.log(err,'Some error ocuurs'))
+
+  }
   return (
     <div>
       <Flex justify='space-between'>
@@ -75,9 +101,9 @@ export default function WorkExperience({index}) {
         <Input placeholder='Enter Company Name'id='company'isRequired={true}onChange={formik.handleChange}value={formik.company}ref={ref}/>
         <label htmlFor='roles'>Summary</label>
         
-        <Textarea placeholder='Describe yours roles and responsibilities' isRequired={true}id='roles'onChange={formik.handleChange}value={formik.roles}/>
+        <Textarea placeholder='Describe yours roles and responsibilities' ref={myRef}isRequired={true}id='roles'onChange={formik.handleChange}value={formik.roles}/>
         <Flex gap={4}justify='flex-start'align='center'>
-        <Image src='/chatGPT-Icon.png'width={50}height={50}alt='chatGPT'/>
+        <Image src='/chatGPT-Icon.png'width={50}height={50}alt='chatGPT'onClick={getResponseFromChatGpt}/>
         <b>Click here to get help from ChatGPT</b>
 
         </Flex>

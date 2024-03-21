@@ -69,6 +69,7 @@
     margin-right: 5px;
 }
 
+
 @media (max-width:600px){
    .name{
     font-size: 1.1rem !important;
@@ -81,17 +82,29 @@
    .signOut,.icons{
     width: 50px;
     height: 50px;
-    font-size: .6rem !important;
+   
    }
-   .user-image{
-    width: 30px !important;
-    height: 30px !important;
+ 
+
+   .persnal-info{
+    font-size: .8rem;
+    overflow-x: auto;
+  
    }
   
  
 }
 
+@media (max-width:1000px){
+    .user-image{
+        width: 34px !important;
+        height: 34px !important;
+       }
+
+}
+
 @media (max-width:700px){
+   
     .rightsidemenu{
         display: flex;
         flex-direction: column;
@@ -218,6 +231,11 @@ body::-webkit-scrollbar-track {
   .chatGpt-Icon{
     cursor: pointer;
     margin: 10px;
+  }
+
+  .chatGpt-Icon-navbar{
+ 
+    cursor: pointer;
   }
  
 

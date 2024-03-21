@@ -1,11 +1,12 @@
 "use client"
-import { Box, Button, Flex, Heading, Spacer, Text, useColorMode } from '@chakra-ui/react'
+import {  Button, Flex, Heading, Text, useColorMode } from '@chakra-ui/react'
 import {  signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import React from 'react'
 import { FaSun,FaMoon,FaHome } from "react-icons/fa";
+import { FaSignOutAlt } from "react-icons/fa";
 
-import '../globals.css'
+
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -16,7 +17,7 @@ import { useRouter } from 'next/navigation'
 export default function Navbar() {
     const {data:session}=useSession()
 
-    console.log(session,'linkedin session')
+   
   
     const{colorMode,toggleColorMode}=useColorMode()
     const router=useRouter()
@@ -54,10 +55,10 @@ export default function Navbar() {
   </Flex>
 
   <Flex justify='space-between'gap={2}className='rightsidemenu'>
-  <Button onClick={chatGPT}size='md'className='signOut'>Try ChatGPT</Button>
+  <Image src='/chatGPT-Icon.png'width={40}height={40}alt='chatGPT'className='chatGpt-Icon-navbar'onClick={chatGPT}/>
     
     <Link className='home'href='/'><FaHome/></Link>
-    <Button onClick={handleSignOut}size='md'className='signOut'>Sign Out</Button>
+    <Button onClick={handleSignOut}size='md'className='signOut'><FaSignOutAlt/></Button>
     <Button onClick={toggleColorMode}size='md'className='icons'>{colorMode==='dark'?<FaSun />:<FaMoon/>}</Button>
    
   </Flex>

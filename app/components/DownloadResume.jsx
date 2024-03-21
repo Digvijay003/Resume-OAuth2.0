@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Button, Center, Container, Divider, Flex, Grid, GridItem, Heading, Skeleton, Text, useColorMode, useToast } from '@chakra-ui/react'
 import Image from 'next/image'
 
 import { useSession } from 'next-auth/react'
-import html2pdf from 'html2pdf.js';
+
 import { useReactToPrint } from 'react-to-print';
 
 
@@ -14,6 +14,17 @@ import { useReactToPrint } from 'react-to-print';
 export default function DownloadResume() {
 
   const{colorMode,toggleColorMode}=useColorMode()
+
+
+
+
+
+  useEffect(()=>{
+    console.log(window.innerWidth)
+
+  },[window.innerWidth])
+
+ 
 
   const elementToBePrinted=useRef()
    
@@ -44,7 +55,7 @@ export default function DownloadResume() {
   
     if(data){
     
-      const llKeys=Object?.keys(data)
+      const allKeys=Object?.keys(data)
 
     allKeys?.forEach(item=>{
      
@@ -116,10 +127,10 @@ export default function DownloadResume() {
           <Flex justify='space-between'>
           <Heading size='lg'>User personal Info</Heading>
           <Image
-          className="rounded-full user-iamge"
+          className=" rounded-full user-image"
         alt='user-image'
-        width={50}
-        height={50}
+     width={60}
+     height={60}
          
           src={session?.user?.image}
           style={{border:'2px solid #fd0'}}
@@ -146,7 +157,7 @@ export default function DownloadResume() {
              <Heading size='lg'>User education Info</Heading>
             <Flex justify='space-between'><b>University Name</b>{item?.payload?.university}</Flex><br/>
             <Flex justify='space-between'><b>University Type</b>{item?.payload?.type}</Flex><br/>
-            <Flex justify='space-between'><b>Roles and responsibilities</b>{item?.payload?.roles}</Flex><br/>
+            <Flex justify='space-between'gap={4}style={{width:'100%',overflow:'auto'}}><b>Roles and responsibilities</b>{item?.payload?.roles}</Flex><br/>
             <Flex justify='space-between'><b>From</b>{item?.payload?.from}</Flex><br/>
             <Flex justify='space-between'><b>To</b>{item?.payload?.to}</Flex><br/>
             <Skeleton startColor='gray.300' endColor='gray.500' height='5px' />
@@ -162,7 +173,7 @@ export default function DownloadResume() {
           return <div key={index}style={{paddingLeft:'10px',paddingRight:'20px'}}>
               <Heading size='lg'>Work Experience Info</Heading>
             <Flex justify='space-between'><b>Company Name</b>{item?.payload?.company} </Flex><br/>
-            <Flex justify='space-between'><b>Roles </b>{item?.payload?.roles}</Flex><br/>
+            <Flex justify='space-between'gap={4}style={{width:'100%',overflow:'auto'}}><b>Roles </b>{item?.payload?.roles}</Flex><br/>
             <Flex justify='space-between'><b>From</b>{item?.payload?.from}</Flex><br/>
             <Flex justify='space-between'><b>To</b>{item?.payload?.to}</Flex><br/>
             <Skeleton startColor='gray.300' endColor='gray.500' height='5px' />

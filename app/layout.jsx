@@ -1,12 +1,13 @@
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import NextAuthProvider from "./Providers";
 import MyChakraProvider from "./ChakraProvider";
-import Navbar from "./components/Navbar";
+
 import { ReactQueryProvider } from "./ReactQueryProvider";
 
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Poppins({ subsets: ["latin"],
+weight:["100", "200", "300", "400", "500", "600", "700", "800", "900"] });
 
 export const metadata = {
   title: "Resume Builder",

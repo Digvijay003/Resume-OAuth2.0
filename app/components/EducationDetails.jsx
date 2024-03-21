@@ -8,8 +8,11 @@ import { BsCheckCircleFill } from "react-icons/bs";
 
 import { addEducationalComponent, removeEducationalComponent } from '@/reducers/AllComponentsSlice';
 import Image from 'next/image';
+import axios from 'axios';
 
 export default function EducationDetails({index}) {
+
+  const myRef=useRef()
   const dispatch=useDispatch()
   const ref=useRef()
   const toast=useToast()
@@ -55,6 +58,30 @@ export default function EducationDetails({index}) {
     }
 
   })
+
+
+  const getResponseFromChatGpt=()=>{
+    const url = 'http://localhost:3000/api/getResponse';
+  
+
+    const data={
+        model: 'gpt-3.5-turbo',
+        messages:[{"role":"user","content":myRef.current.value}]
+    }
+
+    const headers=  {
+      'Content-Type': 'application/json'
+    }
+
+    axios.post(url,data,{headers:headers})
+    .then(res=>{
+      console.log(res.data,'let see prompt response')
+      myRef.current.value=res?.data?.myresponse?.choices[0]?.message?.content
+
+    } )
+    .catch(err=>console.log(err,'Some error ocuurs'))
+
+  }
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
@@ -81,9 +108,9 @@ export default function EducationDetails({index}) {
  
 </Select>
         <label htmlFor='roles'>Summary</label>
-        <Textarea placeholder='Describe yours roles and responsibilities' id='roles'onChange={formik.handleChange}value={formik.roles}isRequired={true}/>
+        <Textarea placeholder='Describe yours roles and responsibilities' ref={myRef}id='roles'onChange={formik.handleChange}value={formik.roles}isRequired={true}/>
         <Flex gap={4}justify='flex-start'align='center'>
-        <Image src='/chatGPT-Icon.png'width={50}height={50}alt='chatGPT'/>
+        <Image src='/chatGPT-Icon.png'width={50}height={50}alt='chatGPT'className='chatGpt-Icon'onClick={getResponseFromChatGpt}/>
         <b>Click here to get help from ChatGPT</b>
 
         </Flex>

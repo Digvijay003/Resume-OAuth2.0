@@ -41,10 +41,6 @@ export default function PersonalDetails() {
       const regEx=/^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 
-      console.log(values.email)
-
-      console.log(regEx.test(values.email.toString()))
-
       if(!regEx.test(values.email.toString())){
         setError("Email should contains uppercase,lowercase,symbol and digits")
 
@@ -100,7 +96,7 @@ export default function PersonalDetails() {
       myRef.current.value=res?.data?.myresponse?.choices[0]?.message?.content
 
     } )
-    .catch(err=>console.log(err))
+    .catch(err=>console.log(err,'Some error ocuurs'))
 
   }
   return (
@@ -119,7 +115,7 @@ export default function PersonalDetails() {
     </InputLeftAddon>
        
    
-    <Input type='tel' placeholder='Phone number' maxlength='9'isRequired={true}id='phone'onChange={formik.handleChange}value={formik.phone}onBlur={formik.handleBlur}/>
+    <Input type='tel' placeholder='Phone number' maxlength='10'isRequired={true}id='phone'onChange={formik.handleChange}value={formik.phone}onBlur={formik.handleBlur}/>
     </InputGroup>
   <FormLabel htmlFor='email'>Email</FormLabel>
         <Input placeholder='Enter Email address'id='email'isRequired={true}onChange={formik.handleChange}type='email'value={formik.email}onBlur={formik.handleBlur}/>
