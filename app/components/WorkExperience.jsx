@@ -41,6 +41,15 @@ export default function WorkExperience({index}) {
       to:''
     },
     onSubmit:(values)=>{
+
+      const dateFrom=new Date(values.from)
+      const dateTo=new Date(values.to)
+      const result=dateTo.getFullYear()-dateFrom.getFullYear()
+
+      if(result<3){
+        alert('Check Dates First')
+        return
+      }
       clearTimeout(timeout)
       setShowIcon(true)
 
@@ -74,7 +83,7 @@ export default function WorkExperience({index}) {
 
     axios.post(url,data,{headers:headers})
     .then(res=>{
-      console.log(res.data,'let see prompt response')
+     
       myRef.current.value=res?.data?.myresponse?.choices[0]?.message?.content
 
     } )
@@ -98,10 +107,10 @@ export default function WorkExperience({index}) {
       <form onSubmit={formik.handleSubmit}>
        
           <label htmlFor='company'>Company Name</label>
-        <Input placeholder='Enter Company Name'id='company'isRequired={true}onChange={formik.handleChange}value={formik.company}ref={ref}/>
+        <Input focusBorderColor='black'placeholder='Enter Company Name'id='company'isRequired={true}onChange={formik.handleChange}value={formik.company}ref={ref}/>
         <label htmlFor='roles'>Summary</label>
         
-        <Textarea placeholder='Describe yours roles and responsibilities' ref={myRef}isRequired={true}id='roles'onChange={formik.handleChange}value={formik.roles}/>
+        <Textarea focusBorderColor='black'placeholder='Describe yours roles and responsibilities' ref={myRef}isRequired={true}id='roles'onChange={formik.handleChange}value={formik.roles}/>
         <Flex gap={4}justify='flex-start'align='center'>
         <Image src='/chatGPT-Icon.png'width={50}height={50}alt='chatGPT'onClick={getResponseFromChatGpt}/>
         <b>Click here to get help from ChatGPT</b>
@@ -109,6 +118,7 @@ export default function WorkExperience({index}) {
         </Flex>
         <label>From</label>
         <Input
+        focusBorderColor='black'
  placeholder="From"
  size="md"
  type="date"
@@ -119,6 +129,7 @@ export default function WorkExperience({index}) {
 />
 <label>To</label>
         <Input
+        focusBorderColor='black'
  placeholder="to"
  size="md"
  type="date"

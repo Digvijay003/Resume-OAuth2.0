@@ -38,11 +38,11 @@ export default function Decalartion() {
       <form onSubmit={formik.handleSubmit}>
          <Heading>Decalartion</Heading>
         <label htmlFor='linkedin'>Linkedin URL</label>
-        <Input placeholder='Enter Linkedin Profile URL'id='linkedin'isRequired={true}onChange={formik.handleChange}value={formik.linkedin}/>
+        <Input focusBorderColor='black'placeholder='Enter Linkedin Profile URL'id='linkedin'isRequired={true}onChange={formik.handleChange}value={formik.linkedin}/>
         <label htmlFor='certificate1'>Certificate 1</label>
-        <Input placeholder='Enter Certification here'id='certificate1'onChange={formik.handleChange}value={formik.certificate1}isRequired={true}/>
+        <Input focusBorderColor='black'placeholder='Enter Certification here'id='certificate1'onChange={formik.handleChange}value={formik.certificate1}isRequired={true}/>
         <label htmlFor='certificate2'>Certificate 2</label>
-        <Input placeholder='Enter Certification here'id='certificate2'onChange={formik.handleChange}value={formik.certificate2}/>
+        <Input focusBorderColor='black'placeholder='Enter Certification here'id='certificate2'onChange={formik.handleChange}value={formik.certificate2}/>
         <Center height='10px'>
   <Divider orientation='vertical' />
 </Center>

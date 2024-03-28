@@ -11,7 +11,7 @@ import Decalartion from './Decalartion'
 import {  useSelector } from 'react-redux'
 import {  useRouter } from 'next/navigation'
 import getData from '@/utils/getData'
-import { useQuery } from '@tanstack/react-query'
+
 
 
 export default function UserInfo() {
@@ -32,7 +32,7 @@ export default function UserInfo() {
       //   queryFn:async ()=>await getData(token)
       // })
 
-      console.log(token,'Let see token')
+     
       // console.log(data?.data,'Let see API Data')
 
       if(token){
@@ -40,7 +40,7 @@ export default function UserInfo() {
           const res=await getData(token)
           return res
         }
-        console.log(getdata(),'get data function')
+       
         getdata().then(res=>console.log(res,'Let see Api data'))
 
       }
@@ -55,7 +55,7 @@ export default function UserInfo() {
         alert('Please fill the form completely first')
         return
       }
-      console.log(allData,'akhdkhsfk')
+   
       localStorage.setItem("data",JSON.stringify(allData))
       
      
@@ -64,9 +64,9 @@ export default function UserInfo() {
       
     }
 
-    const moveToTemplates=()=>{
-      router.push('/templates')
-    }
+    // const moveToTemplates=()=>{
+    //   router.push('/templates')
+    // }
 
     if(status==='authenticated'){
         return <div >

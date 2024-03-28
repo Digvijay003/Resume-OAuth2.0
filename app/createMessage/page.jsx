@@ -14,7 +14,7 @@ export default function page() {
    
     const [chatLogs,setChatLogs]=useState([])
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
 
   
 
@@ -52,13 +52,13 @@ export default function page() {
         setIsLoading(true)
 
         axios.post(url,data,{headers:headers}).then(res=>{
-            console.log(res,'Let see Response')
+           
              setChatLogs((prevChatLog) => [...prevChatLog, { type: 'bot', message: res?.data?.data?.choices[0]?.message?.content }])
             setIsLoading(false)
         })
         .catch(err=>{
           setIsLoading(false)
-            console.log(err.response.data,'error occurs')
+            console.log(err,'error occurs')
         })
 
     }

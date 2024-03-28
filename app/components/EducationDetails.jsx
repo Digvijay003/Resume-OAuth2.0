@@ -41,6 +41,18 @@ export default function EducationDetails({index}) {
       to:''
     },
     onSubmit:(values)=>{
+     
+      const dateFrom = new Date(values.from)
+      
+
+      const dateTo=new Date(values.to)
+      const result=(dateTo.getFullYear()-dateFrom.getFullYear())
+
+      if(result<3){
+        alert("Check Dates First")
+        return
+      }
+     
       clearTimeout(timeout)
       setShowIcon(true)
 
@@ -75,7 +87,7 @@ export default function EducationDetails({index}) {
 
     axios.post(url,data,{headers:headers})
     .then(res=>{
-      console.log(res.data,'let see prompt response')
+     
       myRef.current.value=res?.data?.myresponse?.choices[0]?.message?.content
 
     } )
@@ -92,7 +104,7 @@ export default function EducationDetails({index}) {
         <Button onClick={()=>handleClear(index)}colorScheme='red'isDisabled={index===0}>Delete<MdDelete /></Button>
   
 
-<Button onClick={()=>handleAddMore(index)}colorScheme='green'>Add<MdAddCircleOutline/></Button>
+<Button onClick={()=>handleAddMore(index)}colorScheme='green'isDisabled={index===3}>Add<MdAddCircleOutline/></Button>
 
         </Flex>
 
@@ -100,15 +112,15 @@ export default function EducationDetails({index}) {
         </Flex>
        
         <label htmlFor='university'>University Name</label>
-        <Input placeholder='Enter University Name'id='university'isRequired={true}onChange={formik.handleChange}value={formik.university}ref={ref}/>
+        <Input focusBorderColor='black'placeholder='Enter University Name'id='university'isRequired={true}onChange={formik.handleChange}value={formik.university}ref={ref}/>
         <label htmlFor='type'>Choose type</label>
-<Select placeholder='Select Type'id='type'onChange={formik.handleChange}value={formik.type}isRequired={true}>
+<Select placeholder='Select Type'id='type'focusBorderColor='black'onChange={formik.handleChange}value={formik.type}isRequired={true}>
   <option value='graduation'>Graduation</option>
   <option value='intermediate'>Intermediate</option>
  
 </Select>
         <label htmlFor='roles'>Summary</label>
-        <Textarea placeholder='Describe yours roles and responsibilities' ref={myRef}id='roles'onChange={formik.handleChange}value={formik.roles}isRequired={true}/>
+        <Textarea focusBorderColor='black'placeholder='Describe yours roles and responsibilities' ref={myRef}id='roles'onChange={formik.handleChange}value={formik.roles}isRequired={true}/>
         <Flex gap={4}justify='flex-start'align='center'>
         <Image src='/chatGPT-Icon.png'width={50}height={50}alt='chatGPT'className='chatGpt-Icon'onClick={getResponseFromChatGpt}/>
         <b>Click here to get help from ChatGPT</b>
@@ -116,20 +128,24 @@ export default function EducationDetails({index}) {
         </Flex>
         <label>From</label>
         <Input
+        focusBorderColor='black'
  placeholder="From"
  size="md"
  type="datetime-local"
  id='from'
+ name='from'
  onChange={formik.handleChange}
  value={formik.from}
  isRequired={true}
 />
 <label>To</label>
         <Input
+        focusBorderColor='black'
  placeholder="to"
  size="md"
  type="datetime-local"
  id='to'
+ name='to'
  onChange={formik.handleChange}
  value={formik.to}
  isRequired={true}

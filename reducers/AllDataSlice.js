@@ -75,7 +75,7 @@ const addAllData=createSlice({
           
             
                 for(let key in state){
-                    const numbersOnly = key?.match(/\d+/g);
+                    const numbersOnly = key?.match(/\d+/g)
 
                     if(numbersOnly!==null && numbersOnly===keyTobeRemoved){
                      

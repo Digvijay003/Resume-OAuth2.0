@@ -1,18 +1,19 @@
 import axios from "axios";
 
 
-const getData=async (token)=>{
+const getData = async (token)=>{
     
     const response=await axios.get('https://api.linkedin.com/v2/me',{
         headers:{
             Authorization:`Bearer ${token}`,
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            
    
         }
      
-    }).then(res=>console.log(res,'PTA NHI')).catch(err=>console.error(err,'let see error'))
+    }).then(res=>console.log(res,'Let see Response')).catch(err=>console.error(err,'let see error'))
 
     // const apiUrl = 'https://api.linkedin.com/v2/me';
     // const authToken = token;
