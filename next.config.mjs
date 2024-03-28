@@ -17,7 +17,8 @@ const nextConfig = {
             }
           ]
 
-    }
+    },
+    reactStrictMode:false
    
 };
 

@@ -6,19 +6,46 @@ import { useSession } from 'next-auth/react'
 
 import { useReactToPrint } from 'react-to-print';
 import { DragDropContext,Droppable,Draggable } from 'react-beautiful-dnd';
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 export default function DownloadResume() {
 
   const{colorMode,toggleColorMode}=useColorMode()
 
-  const elementToBePrinted=useRef()
-   
-  
-    const {data:session}=useSession()
-    const data=JSON.parse(localStorage.getItem("data"))
+  const [items,setItems]=useState()
 
-  
+  const elementToBePrinted=useRef()
+  const mydata=JSON.parse(localStorage.getItem("data"))
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const mydata = JSON.parse(localStorage.getItem('data'));
+        if (mydata) {
+          const allKeys = Object.keys(mydata);
+          const newItems = [];
+          allKeys.forEach((item) => {
+            if (item.startsWith('education')) {
+              newItems.push({ type: 'education', content: mydata[item] });
+            } else if (item.startsWith('work')) {
+              newItems.push({ type: 'work', content: mydata[item] });
+            }
+          });
+          setItems(newItems);
+        }
+      } catch (error) {
+        console.error('Error fetching data from local storage:', error);
+        // Handle error (e.g., display a toast notification)
+      } 
+    };
+
+    fetchData();
+  }, []); // Empty dependency array to ensure this effect runs only once
+
+
+
+    const {data:session}=useSession()
 
     const [bgColor,setBgColor]=useState('')
 
@@ -31,31 +58,13 @@ export default function DownloadResume() {
 
     }
 
-   
-
-
     const toast=useToast()
-   
-    const educationFields=[]
-    const workFields=[]
+
+
+        
   
-    if(data){
-    
-      const allKeys=Object?.keys(data)
 
-     allKeys?.forEach(item=>{
-     
-      if(item?.startsWith('e')){
-      
-        educationFields.push(data[item])
-       
-      }
-      else if(item?.startsWith('w')){
-        workFields.push(data[item])
-      }
-    })
 
-    }
 
   
 
@@ -63,6 +72,17 @@ export default function DownloadResume() {
       content:()=>elementToBePrinted.current,
     
     })
+
+    const dragEnd=(result)=>{
+      if (!result.destination) {
+        return
+    }
+    const newItems = [...items];
+    const [removed] = newItems.splice(result.source.index, 1);
+    newItems.splice(result.destination.index, 0, removed);
+    setItems(newItems)
+
+    }
 
     // const handleDownLoad=(e)=>{
     //   e.preventDefault()
@@ -89,10 +109,8 @@ export default function DownloadResume() {
 
     // }
   return (<div className='resume-container'>
-  <DragDropContext>
-    <Droppable droppableId='droppable'>
-      {(provided,snapshots)=>{
-        return <div {...provided.droppableProps}ref={provided.innerRef}>
+  <DragDropContext onDragEnd={dragEnd}>
+
            <Flex justify='space-between'>
       <Flex justify='center'align='center'gap={4}padding='10px'>
         <b>Choose Any One of the Color</b>
@@ -133,101 +151,102 @@ export default function DownloadResume() {
       
 
   
-    <Flex justify='space-between'><b>Name</b>{data?.personaldata?.payload?.name}</Flex><br/>
-    <Flex justify='space-between'style={{width:'100%',overflow:'auto'}}><b>Email</b>{data?.personaldata?.payload?.email}</Flex><br/>
-    <Flex justify='space-between'><b>Contact Number</b>{data?.personaldata?.payload?.phone}</Flex><br/>
+    <Flex justify='space-between'><b>Name</b>{mydata?.personaldata?.payload?.name}</Flex><br/>
+    <Flex justify='space-between'style={{width:'100%',overflow:'auto'}}><b>Email</b>{mydata?.personaldata?.payload?.email}</Flex><br/>
+    <Flex justify='space-between'><b>Contact Number</b>{mydata?.personaldata?.payload?.phone}</Flex><br/>
    
-      <Flex justify='space-between'><b>Job Profile</b>{data?.personaldata?.payload.profile}</Flex><br/>
-    <Flex justify='space-between'><b>Primary Skill</b>{data?.personaldata?.payload.skill}</Flex><br/>
-    <Flex justify='space-between'style={{width:'100%',overflow:'auto'}}gap={5}><b>Summary</b>{data?.personaldata?.payload.summary}</Flex><br/>
+      <Flex justify='space-between'><b>Job Profile</b>{mydata?.personaldata?.payload.profile}</Flex><br/>
+    <Flex justify='space-between'><b>Primary Skill</b>{mydata?.personaldata?.payload.skill}</Flex><br/>
+    <Flex justify='space-between'style={{width:'100%',overflow:'auto'}}gap={5}><b>Summary</b>{mydata?.personaldata?.payload.summary}</Flex><br/>
     </GridItem>
 
-    <GridItem style={{overflowY:'scroll',width:'60vw'}}className='all-details'>
-
-    {educationFields?.map((item,index)=>{
-
-      return <Draggable draggableId={index}>
-        {(provided,snapshots)=>{
-          return <div ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}>
-            <div style={{paddingLeft:'10px',paddingRight:'20px'}}>
-         <Heading size='lg'>User education Info</Heading>
-        <Flex justify='space-between'><b>University Name</b>{item?.payload?.university}</Flex><br/>
-        <Flex justify='space-between'><b>University Type</b>{item?.payload?.type}</Flex><br/>
-        <Flex justify='space-between'gap={4}style={{width:'100%',overflow:'auto'}}><b>Roles and responsibilities</b>{item?.payload?.roles}</Flex><br/>
-        <Flex justify='space-between'><b>From</b>{item?.payload?.from}</Flex><br/>
-        <Flex justify='space-between'><b>To</b>{item?.payload?.to}</Flex><br/>
-        <Skeleton startColor='gray.300' endColor='gray.500' height='5px' />
-      
+    <Droppable droppableId={`${Math.floor(Math.random()*100)+1}-droppable`}>
 
 
+      {(provided,snapshots)=>(
+         <div ref={provided.innerRef}{...provided.droppableProps}style={{overflowY:'scroll',width:'60vw'}}>
+          <GridItem className='all-details'>
+            {items?.map((item,index)=>{
+              if(item.type==='education'){
+                return <Draggable draggableId={`${index}`}index={index}key={index}>
+    {(provided,snapshots)=>(
+       <div ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+      id={index}
+      key={index}
+      style={{backgroundColor:snapshots.isDragging?'#fd0':'white'}}>
+        <div style={{paddingLeft:'10px',paddingRight:'20px'}}id={index}>
+     <Heading size='lg'>User education Info</Heading>
+    <Flex justify='space-between'><b>University Name</b>{item?.content.payload?.university}</Flex><br/>
+    <Flex justify='space-between'><b>University Type</b>{item?.content.payload?.type}</Flex><br/>
+    <Flex justify='space-between'gap={4}style={{width:'100%',overflow:'auto'}}><b>Roles and responsibilities</b>{item?.content.payload?.roles}</Flex><br/>
+    <Flex justify='space-between'><b>From</b>{item?.content.payload?.from}</Flex><br/>
+    <Flex justify='space-between'><b>To</b>{item?.content.payload?.to}</Flex><br/>
+    <Skeleton startColor='gray.300' endColor='gray.500' height='5px' />
+  
+
+
+
+  </div>
 
       </div>
+            )}
+  </Draggable>
+              }
+              else if (item.type==='work'){
+                return <Draggable draggableId={`${index}`}index={index}key={index}>
+                {(provided,snapshots)=>(
+                   <div ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  id={index}
+                  key={index}
+                  style={{backgroundColor:snapshots.isDragging?'#fd0':'white'}}>
+                     <div style={{paddingLeft:'10px',paddingRight:'20px'}}id={index}>
+                  <Heading size='lg'>Work Experience Info</Heading>
+                <Flex justify='space-between'><b>Company Name</b>{item?.content.payload?.company} </Flex><br/>
+                <Flex justify='space-between'gap={4}style={{width:'100%',overflow:'auto'}}><b>Roles </b>{item?.content.payload?.roles}</Flex><br/>
+                <Flex justify='space-between'><b>From</b>{item?.content.payload?.from}</Flex><br/>
+                <Flex justify='space-between'><b>To</b>{item?.content.payload?.to}</Flex><br/>
+                <Skeleton startColor='gray.300' endColor='gray.500' height='5px' />
+            
+                </div>
+                    
+                  </div>
+            )}
+              </Draggable>
 
-          </div>
-        }}
-      </Draggable>
-
-       
-    })}
+              }
+            })}
 
 
-    {workFields?.map((item,index)=>{
-      return <Draggable draggableId={index}>
-        {(provided,snapshots)=>{
-          return <div ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}>
-             <div key={index}style={{paddingLeft:'10px',paddingRight:'20px'}}>
-          <Heading size='lg'>Work Experience Info</Heading>
-        <Flex justify='space-between'><b>Company Name</b>{item?.payload?.company} </Flex><br/>
-        <Flex justify='space-between'gap={4}style={{width:'100%',overflow:'auto'}}><b>Roles </b>{item?.payload?.roles}</Flex><br/>
-        <Flex justify='space-between'><b>From</b>{item?.payload?.from}</Flex><br/>
-        <Flex justify='space-between'><b>To</b>{item?.payload?.to}</Flex><br/>
-        <Skeleton startColor='gray.300' endColor='gray.500' height='5px' />
+<div style={{paddingLeft:'10px',paddingRight:'20px'}}>
+  <Heading size='lg'>Decalartion</Heading>
+  <Flex justify='space-between'><b>Linkedin URL</b>{mydata?.decalartionData?.payload.linkedin}</Flex><br/>
+  <Flex justify='space-between'gap={4}style={{width:'100%',overflow:'auto'}}><b>Certificate1</b>{mydata?.decalartionData?.payload.certificate1}</Flex><br/>
+  <Flex justify='space-between'style={{width:'100%',overflow:'auto'}}gap={4}><b>Certificate2</b>{mydata?.decalartionData?.payload.certificate2}</Flex><br/>
+ 
+  
+</div>
+</GridItem>
+{provided.placeholder}
 
         </div>
-            
-          </div>
-        }}
-      </Draggable>
-     
-    })}
+      )}
 
-
-    <div style={{paddingLeft:'10px',paddingRight:'20px'}}>
-      <Heading size='lg'>Decalartion</Heading>
-      <Flex justify='space-between'><b>Linkedin URL</b>{data?.decalartionData?.payload.linkedin}</Flex><br/>
-      <Flex justify='space-between'gap={4}style={{width:'100%',overflow:'auto'}}><b>Certificate1</b>{data?.decalartionData?.payload.certificate1}</Flex><br/>
-      <Flex justify='space-between'style={{width:'100%',overflow:'auto'}}gap={4}><b>Certificate2</b>{data?.decalartionData?.payload.certificate2}</Flex><br/>
-     
-      
-    </div>
-    </GridItem>
-  
-  
-
-   
-  
+    
+    </Droppable>
 
 </Grid>
 </div>
 
     </div>
 
-        </div>
-      }}
+      
 
-    
-
- 
-   
-    </Droppable>
     </DragDropContext>
-  
-   
-    
+ 
    </div>
   )
 }
