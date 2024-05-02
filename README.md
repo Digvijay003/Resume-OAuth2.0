@@ -2,7 +2,7 @@
 
 * This application created with NextAuth.js and Next.js
 * Authentication is done with OAuth 2.0
-* For styling purpose I used Chakra UI Library
+* For styling purpose I used Chakra UI Library and CSS
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
