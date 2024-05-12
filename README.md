@@ -1,4 +1,4 @@
-## About
+### About
 
 * This application created with NextAuth.js and Next.js
 * Authentication is done with OAuth 2.0
