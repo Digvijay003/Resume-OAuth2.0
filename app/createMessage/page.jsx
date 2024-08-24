@@ -8,7 +8,7 @@ import SignIn from '../components/SignIn'
 import { useSession } from 'next-auth/react'
 
 
-export default function page() {
+export default function CreateMessage() {
     const [input,setInput]=useState('')
     const {status}=useSession()
    
